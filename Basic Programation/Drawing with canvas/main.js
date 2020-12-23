@@ -1,6 +1,6 @@
 // Get values
 var draw_button = document.getElementById("draw_button");
-var clear_button = document.getElementById("clear_button");
+var clear_keyboard_button = document.getElementById("clear_keyboard_button");
 var curves_canvas = document.getElementById("curves_canvas");
 var keyboard_canvas = document.getElementById("keyboard_canvas");
 
@@ -35,16 +35,18 @@ function drawCurves()
 	curves_canvas.clearRect(0, 0, 500, 500);
 
 	// Get values
-	let line_amount = parseInt(document.getElementById("line_amount").value);
+	let line_amount = document.getElementById("line_amount");
 	let checkbuttons = {
 		top_left : document.getElementById("top_left").checked,
 		top_right : document.getElementById("top_right").checked,
 		bottom_left : document.getElementById("bottom_left").checked,
 		bottom_right : document.getElementById("bottom_right").checked
 	}
-	let line_color_curves = document.getElementById("line_color_curves").value;
+	let line_color_curves = document.getElementById("line_color_curves");
 
-	// Declare variables
+  // Declare variables
+  line_amount = parseInt(line_amount.value);
+  line_color_curves = line_color_curves.value;
 	let line_separation = 500 / line_amount;
 
 	// Draw top left
@@ -52,7 +54,7 @@ function drawCurves()
 	{
 		for(let tmp_line = 0; tmp_line < line_amount; tmp_line++)
 		{
-      drawLine(
+			drawLine(
         curves_canvas, line_color_curves, 1, 0, (line_separation*tmp_line),
         (500 - line_separation*(tmp_line+1)), 0
         );
@@ -88,7 +90,7 @@ function drawCurves()
 	{
 		for(let tmp_line = 0; tmp_line < line_amount; tmp_line++)
 		{
-      drawLine(
+			drawLine(
         curves_canvas, line_color_curves, 1, 500,
         (500-line_separation*(tmp_line+1)), (line_separation*tmp_line), 500
         );
@@ -100,9 +102,9 @@ function drawKeyboard(keyPress)
 {
 	// Get values
 	let line_color_keyboard = document.getElementById("line_color_keyboard");
-	let vector = document.getElementById("line_length");
+	let vector = document.getElementById("line_length_keyboard");
 
-  // Declare Variables
+  // Declare variables
   line_color_keyboard = line_color_keyboard.value;
   vector = parseInt(vector.value);
 
@@ -110,7 +112,7 @@ function drawKeyboard(keyPress)
 		case KEYS.LEFT: // Left arrow key case
 			drawLine(
         keyboard_canvas, line_color_keyboard, 1, actual_x, actual_y,
-        actual_x-vector, actual_y
+        actual_x - vector, actual_y
         );
 			if (actual_x > 0)
 				actual_x -= vector;
@@ -119,7 +121,7 @@ function drawKeyboard(keyPress)
 		case KEYS.UP: // Up arrow key case
 			drawLine(
         keyboard_canvas, line_color_keyboard, 1, actual_x, actual_y, actual_x,
-        actual_y-vector
+        actual_y - vector
         );
 			if (actual_y > 0)
 				actual_y -= vector;
@@ -128,16 +130,16 @@ function drawKeyboard(keyPress)
 		case KEYS.RIGHT: // Right arrow key case
 			drawLine(
         keyboard_canvas, line_color_keyboard, 1, actual_x, actual_y,
-        actual_x+vector, actual_y
+        actual_x + vector, actual_y
         );
 			if (actual_x < 500)
 				actual_x += vector;
 		break;
 
 		case KEYS.DOWN: // Down arrow key case\\\
-      drawLine(
-        keyboard_canvas, line_color_keyboard, 1, actual_x, actual_y,
-        actual_x, actual_y+vector
+			drawLine(
+        keyboard_canvas, line_color_keyboard, 1, actual_x, actual_y, actual_x,
+        actual_y + vector
         );
 			if (actual_y < 500)
 				actual_y += vector;
@@ -169,14 +171,12 @@ function drawStart() {drawLine(keyboard_canvas, "red", 3, 249, 249, 251, 251);}
 // Draw first lines
 drawContainerCurves();
 drawContainerKeyboard();
-
-// Start point keyboard canvas
-drawLine(keyboard_canvas, "red", 3, 249, 249, 251, 251);
+drawLine(keyboard_canvas, "red", 3, 249, 249, 251, 251); // Start point keyboard canvas
 
 // Declare addEventListener
 draw_button.addEventListener("click", drawCurves);
 draw_button.addEventListener("click", drawContainerCurves);
-document.addEventListener("mousedown", drawKeyboard);
-clear_button.addEventListener("click", clearCanvas);
-clear_button.addEventListener("click", drawContainerKeyboard);
-clear_button.addEventListener("click", drawStart);
+document.addEventListener("keydown", drawKeyboard);
+clear_keyboard_button.addEventListener("click", clearCanvas);
+clear_keyboard_button.addEventListener("click", drawContainerKeyboard);
+clear_keyboard_button.addEventListener("click", drawStart);
