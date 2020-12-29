@@ -7,13 +7,13 @@ var clear_mouse_button = document.getElementById("clear_mouse_button");
 // Canvas
 var curves_canvas = document.getElementById("curves_canvas");
 var keyboard_canvas = document.getElementById("keyboard_canvas");
-var mouse_canvas = document.getElementById("mouse_canvas")
+var mouse_canvas = document.getElementById("mouse_canvas");
 
 // Declare variables
 // Context
 curves_context = curves_canvas.getContext("2d");
 keyboard_context = keyboard_canvas.getContext("2d");
-mouse_context = mouse_canvas.getContext("2d")
+mouse_context = mouse_canvas.getContext("2d");
 
 // Keyboard
 const KEYS = {
@@ -197,24 +197,40 @@ clear_keyboard_button.addEventListener("click", function(){ // Start Point
 });
 
 // Mouse Canvas
-mouse_canvas.addEventListener("mousedown", e => {
+mouse_canvas.addEventListener("mousedown", mouseEvent => { // Case mousedown
   draw = true;
-  mouse_x = e.offsetX;
-  mouse_y = e.offsetY;
+  mouse_x = mouseEvent.offsetX;
+  mouse_y = mouseEvent.offsetY;
 });
-mouse_canvas.addEventListener("mousemove", e => {
+mouse_canvas.addEventListener("mousemove", mouseEvent => { // Case mousemove
   if (draw === true)
   {
-    drawLine(mouse_context, line_color_mouse, 1, mouse_x, mouse_y, e.offsetX, e.offsetY);
-    mouse_x = e.offsetX;
-    mouse_y = e.offsetY;
+    var line_color_mouse = document.getElementById("line_color_mouse");
+    line_color_mouse = line_color_mouse.value;
+    drawLine(
+      mouse_context, line_color_mouse, 1, mouse_x, mouse_y, mouseEvent.offsetX,
+      mouseEvent.offsetY
+      );
+    mouse_x = mouseEvent.offsetX;
+    mouse_y = mouseEvent.offsetY;
   }
 });
-mouse_canvas.addEventListener("mouseup", e => {
+mouse_canvas.addEventListener("mouseup", mouseEvent => { // Case mouseup
   if (draw === true) {
-    drawLine(mouse_context, line_color_mouse, 1, mouse_x, mouse_y, e.offsetX, e.offsetY);
+    var line_color_mouse = document.getElementById("line_color_mouse");
+    line_color_mouse = line_color_mouse.value;
+    drawLine(
+      mouse_context, line_color_mouse, 1, mouse_x, mouse_y, mouseEvent.offsetX,
+      mouseEvent.offsetY
+      );
     mouse_x = 0;
     mouse_y = 0;
     draw = false;
     }
+});
+clear_mouse_button.addEventListener("click", function(){ // Clear canvas
+	mouse_context.clearRect(0, 0, 500, 500);
+});
+clear_mouse_button.addEventListener("click", function(){ // Container
+	drawContainer(mouse_context)
 });
