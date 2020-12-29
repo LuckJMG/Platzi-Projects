@@ -1,12 +1,21 @@
 // Get values
+// Buttons
 var draw_button = document.getElementById("draw_button");
 var clear_keyboard_button = document.getElementById("clear_keyboard_button");
+var clear_mouse_button = document.getElementById("clear_mouse_button");
+
+// Canvas
 var curves_canvas = document.getElementById("curves_canvas");
 var keyboard_canvas = document.getElementById("keyboard_canvas");
+var mouse_canvas = document.getElementById("mouse_canvas")
 
 // Declare variables
-curves_canvas = curves_canvas.getContext("2d");
-keyboard_canvas = keyboard_canvas.getContext("2d");
+// Context
+curves_context = curves_canvas.getContext("2d");
+keyboard_context = keyboard_canvas.getContext("2d");
+mouse_context = mouse_canvas.getContext("2d")
+
+// Keyboard
 const KEYS = {
 	"LEFT" : 37,
 	"UP" : 38,
@@ -15,6 +24,11 @@ const KEYS = {
 };
 var actual_x = 250;
 var actual_y = 250;
+
+// Mouse
+var mouse_x = 0;
+var mouse_y = 0;
+var draw = false;
 
 // Draw a line function
 function drawLine(canvas, color, line_width, start_x, start_y, end_x, end_y)
@@ -28,11 +42,11 @@ function drawLine(canvas, color, line_width, start_x, start_y, end_x, end_y)
 	canvas.closePath();
 }
 
-// Draw curves_canvas function
+// Draw curves_context function
 function drawCurves()
 {
-	// Clear curves_canvas
-	curves_canvas.clearRect(0, 0, 500, 500);
+	// Clear curves_context
+	curves_context.clearRect(0, 0, 500, 500);
 
 	// Get values
 	let line_amount = document.getElementById("line_amount");
@@ -55,7 +69,7 @@ function drawCurves()
 		for(let tmp_line = 0; tmp_line < line_amount; tmp_line++)
 		{
 			drawLine(
-        curves_canvas, line_color_curves, 1, 0, (line_separation*tmp_line),
+        curves_context, line_color_curves, 1, 0, (line_separation*tmp_line),
         (500 - line_separation*(tmp_line+1)), 0
         );
 		}
@@ -67,7 +81,7 @@ function drawCurves()
 		for(let tmp_line = 0; tmp_line < line_amount; tmp_line++)
 		{
 			drawLine(
-        curves_canvas, line_color_curves, 1, 500,
+        curves_context, line_color_curves, 1, 500,
         (line_separation*(tmp_line+1)), (line_separation*tmp_line), 0
         );
 		}
@@ -79,7 +93,7 @@ function drawCurves()
 		for(let tmp_line = 0; tmp_line < line_amount; tmp_line++)
 		{
 			drawLine(
-        curves_canvas, line_color_curves, 1, 0, (line_separation*tmp_line),
+        curves_context, line_color_curves, 1, 0, (line_separation*tmp_line),
         (line_separation*(tmp_line+1)), 500
         );
 		}
@@ -91,7 +105,7 @@ function drawCurves()
 		for(let tmp_line = 0; tmp_line < line_amount; tmp_line++)
 		{
 			drawLine(
-        curves_canvas, line_color_curves, 1, 500,
+        curves_context, line_color_curves, 1, 500,
         (500-line_separation*(tmp_line+1)), (line_separation*tmp_line), 500
         );
 		}
@@ -111,72 +125,96 @@ function drawKeyboard(keyPress)
 	switch (keyPress.keyCode) {
 		case KEYS.LEFT: // Left arrow key case
 			drawLine(
-        keyboard_canvas, line_color_keyboard, 1, actual_x, actual_y,
+        keyboard_context, line_color_keyboard, 1, actual_x, actual_y,
         actual_x - vector, actual_y
         );
 			if (actual_x > 0)
 				actual_x -= vector;
-		break;
+		  break;
 
 		case KEYS.UP: // Up arrow key case
 			drawLine(
-        keyboard_canvas, line_color_keyboard, 1, actual_x, actual_y, actual_x,
+        keyboard_context, line_color_keyboard, 1, actual_x, actual_y, actual_x,
         actual_y - vector
         );
 			if (actual_y > 0)
 				actual_y -= vector;
-		break;
+		  break;
 
 		case KEYS.RIGHT: // Right arrow key case
 			drawLine(
-        keyboard_canvas, line_color_keyboard, 1, actual_x, actual_y,
+        keyboard_context, line_color_keyboard, 1, actual_x, actual_y,
         actual_x + vector, actual_y
         );
 			if (actual_x < 500)
 				actual_x += vector;
-		break;
+		  break;
 
-		case KEYS.DOWN: // Down arrow key case\\\
+		case KEYS.DOWN: // Down arrow key case
 			drawLine(
-        keyboard_canvas, line_color_keyboard, 1, actual_x, actual_y, actual_x,
+        keyboard_context, line_color_keyboard, 1, actual_x, actual_y, actual_x,
         actual_y + vector
         );
 			if (actual_y < 500)
 				actual_y += vector;
-		break;
+		  break;
 	}
 }
 
-// Draw container function for curves canvas
-function drawContainerCurves()
+// Draw container function
+function drawContainer(canvas)
 {
-	drawLine(curves_canvas, "black", 1, 1, 1, 499, 1);
-	drawLine(curves_canvas, "black", 1, 1, 1, 1, 499);
-	drawLine(curves_canvas, "black", 1, 499, 1, 499, 499);
-	drawLine(curves_canvas, "black", 1, 1, 499, 499, 499);
+	drawLine(canvas, "black", 1, 1, 1, 499, 1);
+	drawLine(canvas, "black", 1, 1, 1, 1, 499);
+	drawLine(canvas, "black", 1, 499, 1, 499, 499);
+	drawLine(canvas, "black", 1, 1, 499, 499, 499);
 }
-
-// Draw container function for keyboard canvas
-function drawContainerKeyboard()
-{
-	drawLine(keyboard_canvas, "black", 1, 1, 1, 499, 1);
-	drawLine(keyboard_canvas, "black", 1, 1, 1, 1, 499);
-	drawLine(keyboard_canvas, "black", 1, 499, 1, 499, 499);
-	drawLine(keyboard_canvas, "black", 1, 1, 499, 499, 499);
-}
-
-function clearCanvas() {keyboard_canvas.clearRect(0, 0, 500, 500);}
-function drawStart() {drawLine(keyboard_canvas, "red", 3, 249, 249, 251, 251);}
-
 // Draw first lines
-drawContainerCurves();
-drawContainerKeyboard();
-drawLine(keyboard_canvas, "red", 3, 249, 249, 251, 251); // Start point keyboard canvas
+drawContainer(curves_context);
+drawContainer(keyboard_context);
+drawContainer(mouse_context);
+
+// Start point keyboard canvas
+drawLine(keyboard_context, "red", 3, 249, 249, 251, 251);
 
 // Declare addEventListener
+// Curve canvas
 draw_button.addEventListener("click", drawCurves);
-draw_button.addEventListener("click", drawContainerCurves);
+draw_button.addEventListener("click", function(){
+	drawContainer(curves_context)
+});
+
+// Keyboard canvas
 document.addEventListener("keydown", drawKeyboard);
-clear_keyboard_button.addEventListener("click", clearCanvas);
-clear_keyboard_button.addEventListener("click", drawContainerKeyboard);
-clear_keyboard_button.addEventListener("click", drawStart);
+clear_keyboard_button.addEventListener("click", function(){ // Clear canvas
+	keyboard_context.clearRect(0, 0, 500, 500);
+});
+clear_keyboard_button.addEventListener("click", function(){ // Container
+	drawContainer(keyboard_context)
+});
+clear_keyboard_button.addEventListener("click", function(){ // Start Point
+	drawLine(keyboard_context, "red", 3, 249, 249, 251, 251);
+});
+
+// Mouse Canvas
+mouse_canvas.addEventListener("mousedown", e => {
+  draw = true;
+  mouse_x = e.offsetX;
+  mouse_y = e.offsetY;
+});
+mouse_canvas.addEventListener("mousemove", e => {
+  if (draw === true)
+  {
+    drawLine(mouse_context, line_color_mouse, 1, mouse_x, mouse_y, e.offsetX, e.offsetY);
+    mouse_x = e.offsetX;
+    mouse_y = e.offsetY;
+  }
+});
+mouse_canvas.addEventListener("mouseup", e => {
+  if (draw === true) {
+    drawLine(mouse_context, line_color_mouse, 1, mouse_x, mouse_y, e.offsetX, e.offsetY);
+    mouse_x = 0;
+    mouse_y = 0;
+    draw = false;
+    }
+});
