@@ -43,7 +43,7 @@ function approx(number)
 
   // Approx up or down
   if (decimal < 5)
-  {
+  {Ñ
     number = Math.floor(number);
   }
   else
