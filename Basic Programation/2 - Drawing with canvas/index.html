@@ -17,23 +17,23 @@
 			<div class="input">
 				<p>How many lines do you want?</p>
 				<p>
-					<input type="number" name="Line Amount" id="line_amount">
-					<input type="button" value="Draw" id="draw_button">
+					<input type="number" name="Line Amount" value="50" id="lineAmount">
+					<input type="button" value="Draw" id="btnDraw">
 				</p>
 				<p>
-					<input type="checkbox" name="Top Left" id="top_left">
+					<input type="checkbox" name="Top Left" id="topLeft">
 					Top Left <br>
-					<input type="checkbox" name="Top Right" id="top_right">
+					<input type="checkbox" name="Top Right" id="topRight">
 					Top Right <br>
-					<input type="checkbox" name="Bottom Left" id="bottom_left" checked>
+					<input type="checkbox" name="Bottom Left" id="botLeft" checked>
 					Bottom Left <br>
-					<input type="checkbox" name="Bottom Right" id="bottom_right">
+					<input type="checkbox" name="Bottom Right" id="botRight">
 					Bottom Right
 				</p>
-				<p>What color do you want? <input type="color" name="Line Color" id="line_color_curves"></p>
+				<p>What color do you want? <input type="color" name="Line Color" id="clrCurves"></p>
 			</div>
 			<div class="canvas">
-				<canvas width="500px" height="500px" id="curves_canvas"></canvas>
+				<canvas width="500px" height="500px" id="cnvCurves"></canvas>
 			</div>
 		</section>
 		<hr>
@@ -43,13 +43,13 @@
 				<p>Draw pressing the arrows of your keyboard</p>
 			</div>
 			<div class="input">
-				<p>What length do you want for the line? <input type="number" name="Line Length" id="line_length_keyboard" value="10"></p>
-				<p>What color do you want? <input type="color" name="Line Color" id="line_color_keyboard"></p>
+				<p>What length do you want for the line? <input type="number" name="Line Length" id="lineLengthKeyboard" value="10"></p>
+				<p>What color do you want? <input type="color" name="Line Color" id="clrKeyboard"></p>
 			</div>
 			<div class="canvas">
-				<canvas width="500px" height="500px" id="keyboard_canvas"></canvas>
+				<canvas width="500px" height="500px" id="cnvKeyboard"></canvas>
 			</div>
-			<div class="input"><input type="button" value="Clear" id="clear_keyboard_button"></div>
+			<div class="input"><input type="button" value="Clear" id="btnClearKeyboard"></div>
 		</section>
 		<hr>
 		<section>
@@ -58,14 +58,17 @@
 				<p>Draw int the canvas with your mouse</p>
 			</div>
 			<div class="input">
-				<p>What color do you want? <input type="color" name="Line Color" id="line_color_mouse"></p>
+				<p>What color do you want? <input type="color" name="Line Color" id="clrMouse"></p>
 			</div>
 			<div class="canvas">
-				<canvas width="500px" height="500px" id="mouse_canvas"></canvas>
+				<canvas width="500px" height="500px" id="cnvMouse"></canvas>
 			</div>
-			<div class="input"><input type="button" value="Clear" id="clear_mouse_button"></div>
+			<div class="input"><input type="button" value="Clear" id="btnClearMouse"></div>
 		</section>
 
-		<script src="main.js"></script>
+		<script type="module" src="./js/main.js"></script>
+		<script type="module" src="./js/curves.js"></script>
+		<script type="module" src="./js/keyboard.js"></script>
+		<script type="module" src="./js/mouse.js"></script>
 	</body>
 </html>
