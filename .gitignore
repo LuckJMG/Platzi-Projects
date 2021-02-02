@@ -1,9 +1,0 @@
-[General]
-./.vs_code
-
-[Python]
-./.pytest_cache
-./.venv
-
-[JS]
-./node_modules
