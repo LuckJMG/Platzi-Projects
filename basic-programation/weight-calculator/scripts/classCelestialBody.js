@@ -9,8 +9,9 @@ class CelestialBody {
   calculateWeight (weight) {
     weight = (weight * this.gravity) / this.earthGravity
     weight = weight.toFixed(2)
+    weight = `<li>${this.name}: ${weight} kg</li>`
 
-    return `<li>${this.name}: ${weight} kg</li>`
+    return weight
   }
 }
 
